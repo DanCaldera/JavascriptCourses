@@ -12,12 +12,12 @@ describe('Obtaining data from an api Promise', () => {
     });
   });
 
-  test('should say Hello!', () => {
-    expect(Promise.resolve('Hello!')).resolves.toBe('Hello!');
+  test('should say Hello!', async () => {
+    await expect(Promise.resolve('Hello!')).resolves.toBe('Hello!');
   });
 
-  test('should send Error!', () => {
-    expect(Promise.reject('Error!')).rejects.toBe('Error!');
+  test('should send Error!', async () => {
+    await expect(Promise.reject('Error!')).rejects.toBe('Error!');
   });
 });
 
@@ -39,5 +39,11 @@ describe('Probando promesas Async', () => {
     const { name } = await getDataFromApi('https://rickandmortyapi.com/api/character/1');
     expect(name).toEqual('Rick Sanchez');
     done();
+  });
+
+  test('should Get a request with an Error', async () => {
+    const apiError = 'http://httpstat.us/404';
+    const request = getDataFromApi(apiError);
+    await expect(request).rejects.toEqual(Error('Request failed with status code 404'));
   });
 });
